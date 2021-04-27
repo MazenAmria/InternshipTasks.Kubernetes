@@ -27,3 +27,10 @@ spec:
               value: admin
             - name: MONGODB_DATABASE
               value: stats
+          volumeMounts:
+            - name: db
+              mountPath: /data/db
+      volumes:
+        - name: db
+          persistentVolumeClaim:
+            claimName: db
