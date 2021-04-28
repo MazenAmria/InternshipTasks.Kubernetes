@@ -5,7 +5,7 @@ metadata:
   labels:
     run: flask
 spec:
-  replicas: 2
+  replicas: {{ .Values.flask.deployment.replicas }}
   selector:
     matchLabels:
       run: flask
@@ -18,9 +18,9 @@ spec:
       hostNetwork: true
       containers:
         - name: flask
-          image: mazenamria/server:v1.0
+          image: {{ .Values.flask.deployment.image  }}
           ports:
-            - containerPort: 5000
+            - containerPort: {{ .Values.flask.service.port }}
           env:
             - name: DB_HOST
               value: mongo.default.svc.cluster.local

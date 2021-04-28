@@ -1,0 +1,15 @@
+db_pv:
+  capacity: 5Gi
+
+flask:
+  deployment:
+    replicas: 2
+    image: mazenamria/server:v1.0
+  service:
+    type: NodePort
+    port: 5000
+    targetPort: 5000
+
+mongo:
+  deployment:
+    replicas: 2
