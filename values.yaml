@@ -12,7 +12,7 @@ flask:
 
 mongo:
   deployment:
-    replicas: 1
+    replicas: 2
   service:
     type: ClusterIP
     targetPort: 27017
