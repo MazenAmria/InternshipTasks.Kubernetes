@@ -5,7 +5,7 @@ metadata:
   labels:
     run: flask
 spec:
-  replicas: { { .Values.flask.deployment.replicas } }
+  replicas: {{ .Values.flask.deployment.replicas }}
   selector:
     matchLabels:
       run: flask
@@ -17,14 +17,14 @@ spec:
     spec:
       containers:
         - name: flask
-          image: { { .Values.flask.deployment.image } }
+          image: {{ .Values.flask.deployment.image }}
           ports:
-            - containerPort: { { .Values.flask.service.port } }
+            - containerPort: {{ .Values.flask.service.port }}
           env:
             - name: DB_HOST
-              value: { { .Values.mongo.service.url } }
+              value: {{ .Values.mongo.service.url }}
             - name: DB_PORT
-              value: { { .Values.mongo.service.targetPort | quote } }
+              value: {{ .Values.mongo.service.targetPort | quote }}
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
@@ -37,7 +37,7 @@ spec:
                   key: user
             - name: DB_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: db
                   key: password
             - name: HOST
@@ -52,6 +52,6 @@ spec:
                   key: user
             - name: HOST_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: host
                   key: password

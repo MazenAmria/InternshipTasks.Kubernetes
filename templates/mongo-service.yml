@@ -7,6 +7,6 @@ spec:
   selector:
     run: mongo
   ports:
-    - port: 27001
+    - port: 27017
       targetPort: {{ .Values.mongo.service.targetPort }}
       name: mongo
