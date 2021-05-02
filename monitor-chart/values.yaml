@@ -13,3 +13,7 @@ flask:
 mongo:
   deployment:
     replicas: 2
+  service:
+    type: ClusterIP
+    targetPort: 27001
+    url: mongo.default.svc.cluster.local

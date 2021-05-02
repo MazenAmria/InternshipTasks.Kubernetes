@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: host
+data:
+  host: 172.25.2.118
+  user: root
+  password: root

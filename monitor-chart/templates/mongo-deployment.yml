@@ -5,7 +5,7 @@ metadata:
   labels:
     run: mongo
 spec:
-  replicas: {{ .Values.mongo.deployment.replicas }}
+  replicas: { { .Values.mongo.deployment.replicas } }
   selector:
     matchLabels:
       run: mongo
@@ -22,11 +22,20 @@ spec:
             - containerPort: 27001
           env:
             - name: MONGODB_USERNAME
-              value: admin
+              valueFrom:
+                configMapKeyRef:
+                  name: db
+                  key: user
             - name: MONGODB_PASSWORD
-              value: admin
+              valueFrom:
+                configMapKeyRef:
+                  name: db
+                  key: password
             - name: MONGODB_DATABASE
-              value: stats
+              valueFrom:
+                configMapKeyRef:
+                  name: db
+                  key: name
           volumeMounts:
             - name: db
               mountPath: /data/db

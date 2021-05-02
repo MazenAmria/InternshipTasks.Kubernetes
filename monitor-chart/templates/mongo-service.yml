@@ -3,8 +3,10 @@ kind: Service
 metadata:
   name: mongo
 spec:
+  type: {{ .Values.mongo.service.type }}
   selector:
     run: mongo
   ports:
     - port: 27001
+      targetPort: {{ .Values.mongo.service.targetPort }}
       name: mongo
