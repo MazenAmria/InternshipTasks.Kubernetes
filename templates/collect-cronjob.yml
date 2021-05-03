@@ -3,7 +3,9 @@ kind: CronJob
 metadata:
   name: collect
 spec:
-  schedule: {{ .Values.collect.schedule }}
+  schedule: {{ .Values.collect.schedule | quote }}
+  successfulJobsHistoryLimit: 6
+  failedJobsHistoryLimit: 6
   jobTemplate:
     spec:
       template:
@@ -11,4 +13,39 @@ spec:
           containers:
           - name: collect
             image: {{ .Values.collect.image }}
+            env:
+              - name: DB_HOST
+                value: {{ .Values.db.service.url }}
+              - name: DB_PORT
+                value: {{ .Values.db.service.targetPort | quote }}
+              - name: DB_NAME
+                valueFrom:
+                  configMapKeyRef:
+                    name: db
+                    key: name
+              - name: DB_USER
+                valueFrom:
+                  configMapKeyRef:
+                    name: db
+                    key: user
+              - name: DB_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: db
+                    key: password
+              - name: HOST
+                valueFrom:
+                  configMapKeyRef:
+                    name: host
+                    key: host
+              - name: HOST_USER
+                valueFrom:
+                  configMapKeyRef:
+                    name: host
+                    key: user
+              - name: HOST_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: host
+                    key: password
           restartPolicy: OnFailure

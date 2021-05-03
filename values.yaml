@@ -12,7 +12,7 @@ api:
 
 collect:
   image: mazenamria/collect:v1.0
-  schedule: "0 * * * *"
+  schedule: '*/1 * * * *'
 
 db:
   service:
