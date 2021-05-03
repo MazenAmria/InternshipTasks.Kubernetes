@@ -1,19 +1,21 @@
 db_pv:
   capacity: 5Gi
 
-flask:
+api:
   deployment:
     replicas: 2
-    image: mazenamria/server:v1.0
+    image: mazenamria/api:v1.0
   service:
     type: NodePort
     port: 5000
     targetPort: 5000
 
-mongo:
-  deployment:
-    replicas: 2
+collect:
+  image: mazenamria/collect:v1.0
+  schedule: "0 * * * *"
+
+db:
   service:
     type: ClusterIP
     targetPort: 27017
-    url: mongo.default.svc.cluster.local
+    url: db.default.svc.cluster.local

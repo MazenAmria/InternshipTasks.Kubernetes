@@ -1,22 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo
+  name: db
   labels:
-    run: mongo
+    run: db
 spec:
-  replicas: {{ .Values.mongo.deployment.replicas }}
   selector:
     matchLabels:
-      run: mongo
+      run: db
   template:
     metadata:
-      name: mongo
+      name: db
       labels:
-        run: mongo
+        run: db
     spec:
       containers:
-        - name: mongo
+        - name: db
           image: bitnami/mongodb
           ports:
             - containerPort: 27017
@@ -36,10 +35,10 @@ spec:
                 configMapKeyRef:
                   name: db
                   key: name
-          volumeMounts:
-            - name: db
-              mountPath: /data/db
-      volumes:
-        - name: db
-          persistentVolumeClaim:
-            claimName: db
+      #     volumeMounts:
+      #       - name: db
+      #         mountPath: /bitnami/mongodb
+      # volumes:
+      #   - name: db
+      #     persistentVolumeClaim:
+      #       claimName: db

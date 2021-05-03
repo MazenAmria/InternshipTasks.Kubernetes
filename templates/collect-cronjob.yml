@@ -1,0 +1,14 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: collect
+spec:
+  schedule: {{ .Values.collect.schedule }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: collect
+            image: {{ .Values.collect.image }}
+          restartPolicy: OnFailure

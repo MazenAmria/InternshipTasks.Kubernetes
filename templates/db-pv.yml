@@ -5,7 +5,22 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: default
+    name: db
   capacity:
     storage: {{ .Values.db_pv.capacity }}
   hostPath:
     path: '/mnt/mongo_data'
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.db_pv.capacity }}
